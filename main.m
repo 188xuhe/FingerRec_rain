@@ -1,6 +1,7 @@
 clc
 clear
 close all
+tic
 image1=imread('H:\项目\keilproject\python\finger10.jpg');
 image1 = double(image1);
 %% 图像翻转
@@ -23,6 +24,7 @@ figure,imshow(grad,[0 255]),title("梯度");
 figure,imshow(image1_seg,[0 255]),title('图像分割');
 
 %% 指纹归一化
+%此部分未有用上
 image1_norm = normalize_image(image1,50,50);
 figure,imshow(image1_norm,[0 255]),title('图像归一化');
 
@@ -46,16 +48,26 @@ figure,imshow(image1_gabor),title('gabor图像');
 
 %% 细化
 % image1_thin = bwmorph(image1_gabor,'skel',5);
-image1_thin = thin4(image1_gabor);
+image1_thin = thin(image1_gabor);
 figure,imshow(image1_thin),title('图像细化');
 
 %% 去除短棒和毛刺
 
 %% 求取细节点特征
+[term,bif,nterm,nbif]=get_feature(image1_thin,g);
+figure,imshow(image1_thin),hold on,plot(term(2,:),term(1,:),'bo'),plot(bif(2,:),bif(1,:),'ro');
+
+point = [term,bif];
+fid=fopen('point.txt','wt'); %写的方式打开文件（若不存在，建立文件）；
+fprintf(fid,'%d %d\n',point);  % %d 表示以整数形式写入数据，这正是我想要的；
+fclose(fid);  %关闭文件；
+%% 匹配
+       
 
 
 
 
 
 
+toc
 

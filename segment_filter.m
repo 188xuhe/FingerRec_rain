@@ -15,10 +15,10 @@ hp=imhist(grad);
 hp(1)=0;
 T=otsuthresh(hp);%可对比考虑graythresh
 g=imbinarize(grad,T);
-g(1:8,:)=0;
-g(:,1:8)=0;
-g(m-7:m,:)=0;
-g(:,n-7:n)=0;
+g(1:4,:)=0;
+g(:,1:4)=0;
+g(m-3:m,:)=0;
+g(:,n-3:n)=0;
 figure,imshow(g),title('分割区域');
 %% 图像分割
 image_seg=image .* g;

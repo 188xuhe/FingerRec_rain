@@ -1,0 +1,43 @@
+function [c,M1,N1,mx1,nx1,last11,x,y,bz]=yidongpanbie(M1,N1,X,x,y,mx1,nx1,c,startx,starty,last11,bz)
+% 将扫描从每一个端点出发，若在一定的小的距离内碰到端点或者分叉点，均记为假特征点
+kisze=0;
+[type,K]=find2(X,x,y);
+for(i=1:4)
+    if(K(i,1)~=0)
+        kisze=kisze+1;
+    end
+end
+if(c==0&kisze==1)
+    last11=K(1,1);
+end
+if(type==2)
+    M1(mx1,1)=startx;
+    M1(mx1,2)=starty;
+    mx1=mx1+1;
+    N1(nx1,1)=x;
+    N1(nx1,2)=y;
+    nx1=nx1+1;
+    c=5;
+end
+if(type==1&bz==1)
+    M1(mx1,1)=startx;
+    M1(mx1,2)=starty;
+    mx1=mx1+1;
+    M1(mx1,1)=x;
+    M1(mx1,2)=y;
+    mx1=mx1+1;
+    c=5;
+end
+if(c<5)
+    for(i=1:kisze)
+        if((last11==1&K(i,1)==5)|(last11==2&K(i,1)==6)|(last11==3&K(i,1)==7)|(last11==4&K(i,1)==8)|(last11==5&K(i,1)==1)|(last11==6&K(i,1)==2)|(last11==7&K(i,1)==3)|(last11==8&K(i,1)==4))
+             continue;
+        end
+        [x,y]=yidong1(x,y,K,i);
+         last11=K(i,1);
+         bz=1;
+         break;
+    end
+    c=c+1;
+end
+        
