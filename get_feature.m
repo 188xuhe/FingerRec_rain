@@ -34,37 +34,49 @@ for i=1:nterm       %
     if term(1,i)<10 || term(1,i)+10>ht || term(2,i)+10>wt || term(2,i)<10
         cha_m(term(1,i),term(2,i))=0;
     else
-       if sum(msk(term(1,i),1:term(2,i)-3))==0 || sum(msk(term(1,i),term(2,i)+3:wt))==0 || ...
-          sum(msk(1:term(1,i)-3,term(2,i)))==0 || sum(msk(term(1,i)+3:ht,term(2,i)))==0 
-          cha_m(term(1,i),term(2,i))=0;
-       end
+        for r=0:9
+            if msk(term(1,i)-r,term(2,i))==0 || msk(term(1,i)+r,term(2,i))==0 || ...
+               msk(term(1,i),term(2,i)-r)==0 || msk(term(1,i),term(2,i)+r)==0
+               cha_m(term(1,i),term(2,i))=0;
+            end
+        end
+%        if sum(msk(term(1,i),1:term(2,i)-6))==0 || sum(msk(term(1,i),term(2,i)+6:wt))==0 || ...
+%           sum(msk(1:term(1,i)-6,term(2,i)))==0 || sum(msk(term(1,i)+6:ht,term(2,i)))==0 
+%           cha_m(term(1,i),term(2,i))=0;
+%        end
     end
 end
 for i=1:nbif
      if bif(1,i)<10 || bif(1,i)+10>ht|| bif(2,i)+10>wt || bif(2,i)<10
         cha_m(bif(1,i),bif(2,i))=0;
      else
-       if sum(msk(bif(1,i),1:bif(2,i)-4))==0 || sum(msk(bif(1,i),bif(2,i)+4:wt))==0 || ...
-          sum(msk(1:bif(1,i)-4,bif(2,i)))==0 || sum(msk(bif(1,i)+4:ht,bif(2,i)))==0 
-          cha_m(bif(1,i),bif(2,i))=0;
-       end
+        for r=0:9
+            if msk(bif(1,i)-r,bif(2,i))==0 || msk(bif(1,i)+r,bif(2,i))==0 || ...
+               msk(bif(1,i),bif(2,i)-r)==0 || msk(bif(1,i),bif(2,i)+r)==0
+               cha_m(bif(1,i),bif(2,i))=0;
+            end
+        end
+%        if sum(msk(bif(1,i),1:bif(2,i)-6))==0 || sum(msk(bif(1,i),bif(2,i)+6:wt))==0 || ...
+%           sum(msk(1:bif(1,i)-6,bif(2,i)))==0 || sum(msk(bif(1,i)+6:ht,bif(2,i)))==0 
+%           cha_m(bif(1,i),bif(2,i))=0;
+%        end
      end
 end
 
- for i=1:nterm             
-     for j=i+1:nterm
-        if sqrt((term(1,i)-term(1,j))^2+(term(2,i)-term(2,j))^2)<6
-            cha_m(term(1,i),term(2,i))=0;
-            cha_m(term(1,j),term(2,j))=0;
-        end
-     end
-     for j=1:nbif
-        if sqrt((term(1,i)-bif(1,j))^2+(term(2,i)-bif(2,j))^2)<5
-            cha_m(term(1,i),term(2,i))=0;
-            cha_m(bif(1,j),bif(2,j))=0;
-        end
-     end
+for i=1:nterm             
+ for j=i+1:nterm
+    if sqrt((term(1,i)-term(1,j))^2+(term(2,i)-term(2,j))^2)<6
+        cha_m(term(1,i),term(2,i))=0;
+        cha_m(term(1,j),term(2,j))=0;
+    end
  end
+ for j=1:nbif
+    if sqrt((term(1,i)-bif(1,j))^2+(term(2,i)-bif(2,j))^2)<5
+        cha_m(term(1,i),term(2,i))=0;
+        cha_m(bif(1,j),bif(2,j))=0;
+    end
+ end
+end
 for i = 1:nbif 
   for j = i+1:nbif
     if sqrt((bif(1,i)-bif(1,j))^2+(bif(2,i)-bif(2,j))^2)<5

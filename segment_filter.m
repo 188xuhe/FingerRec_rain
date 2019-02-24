@@ -13,7 +13,8 @@ grad = grad_close;
 
 hp=imhist(grad);
 hp(1)=0;
-T=otsuthresh(hp);%可对比考虑graythresh
+% T=otsuthresh(hp);%可对比考虑graythresh
+T=graythresh(hp)-0.2;
 g=imbinarize(grad,T);
 g(1:4,:)=0;
 g(:,1:4)=0;
